@@ -1,20 +1,23 @@
 import React from 'react'
 import '../styles/Home.css';
-
 import LinkedInIcon from '@material-ui/icons/LinkedIn';
 import GithubIcon from '@material-ui/icons/GitHub';
 import EmailIcon from '@material-ui/icons/Email';
 
 function Home() {
+  const urlGithub = `https://github.com/Imanebln`;
+  const urlLinkedIn = `https://www.linkedin.com/in/imane-boulouane-0ba280199/`;
+  const urlEmail = `mailto:boulouane.imane@gmail.com`;
+
   return (
     <div className='home'>
       <div className='about'>
         <h2>Hi, My Name is Imane Boulouane</h2>
         <div className='prompt'> 
         <p>A software developer with passion for learning and creating.</p>
-        <LinkedInIcon />
-        <EmailIcon />
-        <GithubIcon />
+        <LinkedInIcon onClick={() => window.open(urlLinkedIn,'_blank')} />
+        <EmailIcon onClick={() => window.open(urlEmail,'_blank')}/>
+        <GithubIcon onClick={() => window.open(urlGithub,'_blank')}/>
         </div>
       </div>
       <div className='skills'>
