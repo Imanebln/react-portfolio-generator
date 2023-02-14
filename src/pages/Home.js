@@ -1,13 +1,17 @@
 import React from 'react'
 import '../styles/Home.css';
-import LinkedInIcon from '@material-ui/icons/LinkedIn';
-import GithubIcon from '@material-ui/icons/GitHub';
-import EmailIcon from '@material-ui/icons/Email';
+import LinkedInIcon from '@mui/icons-material/LinkedIn';
+import GithubIcon from '@mui/icons-material/GitHub';
+import EmailIcon from '@mui/icons-material/Email';
+import { useSelector } from 'react-redux';
 
 function Home() {
   const urlGithub = `https://github.com/Imanebln`;
   const urlLinkedIn = `https://www.linkedin.com/in/imane-boulouane-0ba280199/`;
   const urlEmail = `mailto:boulouane.imane@gmail.com`;
+
+  const userInfo = useSelector((state) => state.user);
+  console.log(userInfo);
 
   return (
     <div className='home'>

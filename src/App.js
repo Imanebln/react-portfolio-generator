@@ -6,10 +6,14 @@ import Projects from './pages/Projects';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import ProjectDisplay from './pages/ProjectDisplay';
+import CreateCV from './pages/CreateCV';
+import { Provider } from 'react-redux';
+import {store} from './redux/store.js'
 
 function App() {
   return (
     <div className="App">
+      <Provider store={store}>
       <Router>
         <Navbar />
 
@@ -17,12 +21,13 @@ function App() {
           <Route path='/' element={<Home/>} />
           <Route path='/Experience' element={<Experience/>} />
           <Route path='/Projects' element={<Projects/>} />
+          <Route path='/create' element={<CreateCV/>} />
           <Route path='/project/:id' element={<ProjectDisplay />} />
         </Routes>
         
         <Footer />
       </Router>
-      
+      </Provider>
     </div>
   );
 }

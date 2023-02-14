@@ -1,19 +1,19 @@
 .home {
     width: 100%;
     align-items: center;
-    font-family: "Arial", sans-serif;
-    color: #3e497a;
+    font-family: Quicksand;
+    color: #000000;
   }
   
   .about {
     width: 100%;
-    height: calc(100vh - 100px);
+    height: calc(100vh - 70px);
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     text-align: center;
-    background-color: #21325e;
+    background-color: #000000;
     color: #f0f0f0;
   }
   
@@ -44,7 +44,7 @@
   }
   
   .skills h1 {
-    color: #3e497a;
+    color: #000000;
   }
   
   .skills .list {
@@ -77,4 +77,7 @@
     .skills h2 {
       font-size: 30px;
     }
+  }
+  * {
+    font-family: Quicksand;
   }
