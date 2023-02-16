@@ -1,4 +1,4 @@
-import { Container, TextField, Typography, Paper, Button, FormControl, InputLabel, OutlinedInput, InputAdornment, IconButton } from '@mui/material'
+import { Container, TextField, Typography, Paper, Button, FormControl, InputLabel, OutlinedInput, InputAdornment, IconButton, CssBaseline, Grid, TableRow, Table, TableHead, TableCell} from '@mui/material'
 import React, { useEffect, useRef, useState } from 'react'
 import { makeStyles } from "tss-react/mui";
 import CreateCVModal from '../components/CreateCVModal';
@@ -7,8 +7,15 @@ import * as yup from 'yup';
 import {yupResolver} from '@hookform/resolvers/yup';
 import { useNavigate } from 'react-router-dom';
 import AddIcon from '@mui/icons-material/Add';
-import {addSkill, addExperience, changeFullname, changeEmail, changeAge, changePhone, changeProfile} from '../redux/store.js';
+import {addSkill, addImage, changeFullname, changeEmail, changeAge, changePhone, changeProfile} from '../redux/store.js';
 import { useDispatch, useSelector } from 'react-redux';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+import Box from '@mui/material/Box';
+import Avatar from '@mui/material/Avatar';
+import TableCostum from '../components/TableCostum';
+import { styled } from '@mui/material/styles';
+import Badge from '@mui/material/Badge';
+import PhotoCamera from '@mui/icons-material/PhotoCamera';
 
 // const experience = [
 //   {
@@ -47,6 +54,12 @@ const useStyles = makeStyles()((theme) => ({
   }
   }));
 
+  const SmallAvatar = styled(Avatar)(({ theme }) => ({
+    width: 30,
+    height: 30,
+    // border: `2px solid ${theme.palette.background.paper}`,
+  }));  
+
 function CreateCV() {
 
     // 👇 navigate through app
@@ -54,19 +67,26 @@ function CreateCV() {
 
      // 👇 update mui styles
     const {classes} = useStyles();
+    
+    const theme = createTheme();
 
      // 👇 update user info
     const dispatch = useDispatch();
 
      // 👇 get user info
     const userInfo = useSelector((state) => state.user);
-    console.log(userInfo);
+
     // 👇 modal state
     const [open, setOpen] = useState(false);
- 
+
+     // 👇 image state
+    const [image, setImage] = useState();
 
     // 👇 handle skills TextField using useRef hook
     const skillsRef = useRef();
+
+     // 👇 modal's type state
+     const [type, setType] = useState("");
 
     // 👇 handle open/close modal
     const handleOpen = () => setOpen(true);
@@ -88,18 +108,20 @@ function CreateCV() {
 
     // 👇 submit form's data
     const onSubmit = async (data) => {
-      
+      // console.log(data.image[0].name);
       // dispatch user info
       dispatchData(data);
 
       const user = {
+        image: image,
         fullname: data.fullname,
         email: data.email,
         phone: data.phone,
         age: data.age,
         profile: data.profile,
         skills: userInfo.skills,
-        experiences: userInfo.experiences
+        experiences: userInfo.experiences,
+        education: userInfo.education
       }
 
       // send data to json server
@@ -114,6 +136,7 @@ function CreateCV() {
       dispatch(changeAge(data.age));
       dispatch(changePhone(data.phone));
       dispatch(changeProfile(data.profile));
+      dispatch(addImage(image));
     }
 
     // 👇 post request to json server
@@ -139,77 +162,101 @@ function CreateCV() {
     // 👇 save user to localStorage
     useEffect(()=>{
       localStorage.setItem("user", JSON.stringify(userInfo))
-    },[userInfo])
+    },[userInfo]);
+
+     // 👇 handle modal type
+    const onClick = (event) => {
+      handleOpen();
+      setType(event);
+    }
+
+     // 👇 handle image
+    const handleChange = e => {
+      console.log(e.target.files);
+      setImage(URL.createObjectURL(e.target.files[0]));
+  }
+
+   
 
   return (
-    <div className={classes.root}>
-      <Paper elevation={3}>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <Typography
-        variant='h5'
-        color='textSecondary'
-        display='flex'
-        justifyContent='center'
-        marginBottom='50px'
-        >
-          Add your Curriculum Vitae
-        </Typography>
-        <TextField
-        {...register('fullname')} style={{width: '300px'}} className={classes.field} fullWidth={false} id="outlined-basic" label="Fullname" variant="outlined" />
-        <p 
-        style={{
-          marginTop: '2px',
-          color: 'red',
+    <div>
+    <ThemeProvider theme={theme}>
+      <Container component='main' maxWidth='sm' >
+        <CssBaseline />
+        <Box
+        sx={{
+          marginTop: 8,
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center'
         }}
         >
-          {errors.fullname?.message}
-        </p>
-        <TextField 
-        {...register('email')} style={{width: '300px'}} className={classes.field} fullWidth={false} id="outlined-basic" label="Email" variant="outlined" />
-        <p 
-        style={{
-          marginTop: '2px',
-          color: 'red',
-        }}
-        >
-          {errors.email?.message}
-        </p>
-        <TextField {...register('phone')} style={{width: '300px'}} className={classes.field} fullWidth={false} id="outlined-basic" label="Phone" variant="outlined" />
-        <p 
-        style={{
-          marginTop: '2px',
-          color: 'red',
-        }}
-        >
-          {errors.phone?.message}
-        </p>
-        <TextField {...register('age')} style={{width: '300px'}} className={classes.field} fullWidth={false} id="outlined-basic" label="Age" variant="outlined" />
-        <p 
-        style={{
-          marginTop: '2px',
-          color: 'red',
-        }}
-        >
-          {/* {errors.age?.message} */}
-        </p>
-        <TextField {...register('profile')} style={{width: '300px'}} className={classes.field} fullWidth={false} id="outlined-basic" label="Profile (ex : web developer)" variant="outlined" />
-        <p 
-        style={{
-          marginTop: '2px',
-          color: 'red',
-        }}
-        >
-          {errors.profile?.message}
-        </p>
-        <FormControl variant="outlined">
+                 <Badge
+                  sx={{ width: '100px', height: '100px'}}
+                    overlap="circular"
+                    anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+                    badgeContent={
+                      // <SmallAvatar>
+                        <IconButton color="primary" aria-label="upload picture" component="label">
+                        <input required {...register('image')} hidden accept="image/*" name='image' type="file" onChange={handleChange}/>
+                          <PhotoCamera />
+                        </IconButton>
+                      // </SmallAvatar>
+                    }
+                  >
+                     <Avatar sx={{ width: '100px', height: '100px', bgcolor:'#FED053'  }} alt="image" src={image} style={{objectFit: 'cover'}} />
+                </Badge>
+          {/* </Avatar> */}
+            {/* 👇 form goes here  */}
+          <Box component='form' sx={{mt:3}} onSubmit={handleSubmit(onSubmit)}>
+            <Grid container spacing={2}>
+              <Grid item xs={12} >
+                <TextField
+                {...register('fullname')}
+                fullWidth
+                id="fullname"
+                label='Fulllname'
+                 />
+              </Grid>
+              <Grid item xs={12} >
+                <TextField
+                {...register('email')}
+                fullWidth
+                id="email"
+                label='Email Address'
+                 />
+              </Grid>
+              <Grid item xs={12}  >
+                <TextField
+                {...register('phone')}
+                fullWidth
+                id="phone"
+                label='Phone Number'
+                 />
+              </Grid>
+              <Grid item xs={12} sm={6} >
+                <TextField
+                {...register('age')}
+                fullWidth
+                id="age"
+                label='Age'
+                 />
+              </Grid>
+              <Grid item xs={12} sm={6} >
+                <TextField
+                {...register('profile')}
+                fullWidth
+                id="profile"
+                label='Profile (ex: web developer)'
+                 />
+              </Grid>
+              <Grid item xs={12}>
+              <FormControl fullWidth >
           <InputLabel>Skills</InputLabel>
           <OutlinedInput
-          style={{width: '300px'}} 
-          fullWidth={false}
-          className={classes.field}
+          fullWidth
           {...register('skills')}
           inputRef={skillsRef}
-            type='text'
             endAdornment={
               <InputAdornment position="end">
                 <IconButton
@@ -222,55 +269,82 @@ function CreateCV() {
                 </IconButton>
               </InputAdornment>
             }
-            label="Password"
-          />
-        </FormControl>
+            label="Skills"
+           />
+           </FormControl>
 
-        <div>{userInfo.skills?.map((skill) => (
-          <span key={skill} style={{marginLeft: '3px'}}>
-            {skill},
-          </span>
-        )) }
-        </div>
-        <p 
-        style={{
-          marginTop: '2px',
-          color: 'red',
-        }}
-        >
-          {errors.skills?.message}
-        </p>
+          {/* 👇 skills goes here  */}
+           <Grid item xs={12}>
+            {
+              userInfo.skills?.map((skill) => (
+                <Button key={skill} sx={{mt: 1}}>
+                  {skill}
+                </Button>
+              ))
+            }
+           </Grid>
+            </Grid>
 
-          <Button
-          color='primary'
-          onClick={handleOpen}
-          >
-          Add Education
-          </Button>
-        <div style={{marginTop: '0px'}}>
-        {userInfo.experiences?.map((exp) => (
-          <li key={exp.title}>
-            {`${exp.title} at ${exp.company}`}
-          </li>
-        ))}
-        </div>
-        <Button
-          color='primary'
-          onClick={handleOpen}
-          >
-          Add Work Experience
-          </Button>
-        <br/><br/>
-        <CreateCVModal
-         open={open} 
-         handleClose={handleClose}
-         />
-        <Button type='submit' variant="contained">
-          Submit
-        </Button>
-      </form>
-    </Paper>
-  </div>
+            {/* 👇 work experiences goes here  */}
+            <Grid item xs={12}>
+            <Button
+              fullWidth
+              color='primary'
+              sx={{ mt: 3, mb: 2 }}
+              onClick={() => onClick('experience')}
+              required
+            >
+              Add Work Experience
+            </Button> 
+            <CreateCVModal
+                open={open} 
+                handleClose={handleClose}
+                type={type}
+            />
+
+            {/* table goes here  */}
+            {userInfo.experiences?.length > 0 && <TableCostum type="experience" />}
+            </Grid>
+
+            {/* 👇 education goes here  */}
+            <Grid item xs={12}>
+              <Button
+              fullWidth
+              color='primary'
+              sx={{ mt: 3, mb: 2}}
+              onClick={() => onClick('education')}
+              required
+              >
+                Add Education
+              </Button>
+              <CreateCVModal
+                  open={open} 
+                  handleClose={handleClose}
+                  type={type}
+              />
+
+              {/* table goes here  */}
+              {userInfo.education?.length > 0 && <TableCostum type="education" />}
+
+            <Button
+            type='submit'
+            variant='contained'
+            fullWidth
+            >
+              Submit
+            </Button>
+            </Grid>
+            
+            </Grid>
+            
+
+          </Box>
+
+        </Box>
+
+      </Container>
+    </ThemeProvider>
+    </div>
   )
 }
 

@@ -4,6 +4,7 @@ import LinkedInIcon from '@mui/icons-material/LinkedIn';
 import GithubIcon from '@mui/icons-material/GitHub';
 import EmailIcon from '@mui/icons-material/Email';
 import { useSelector } from 'react-redux';
+import Typed from 'react-typed';
 
 function Home() {
   const urlGithub = `https://github.com/Imanebln`;
@@ -18,10 +19,15 @@ function Home() {
       <div className='about'>
         <h2>Hi, My Name is Imane Boulouane</h2>
         <div className='prompt'> 
-        <p>A software developer with passion for learning and creating.</p>
-        <LinkedInIcon onClick={() => window.open(urlLinkedIn,'_blank')} />
+          <Typed className="typedText"
+             strings={["Front End developer", "Backend developer", "Computer Science Engineer"]}      
+             typeSpeed={40} backSpeed={60} loop
+          />
+        {/* <p>A software developer with passion for learning and creating.</p> */}
+        <a href='#' className='contactMe'>Contact Me</a>
+        {/* <LinkedInIcon onClick={() => window.open(urlLinkedIn,'_blank')} />
         <EmailIcon onClick={() => window.open(urlEmail,'_blank')}/>
-        <GithubIcon onClick={() => window.open(urlGithub,'_blank')}/>
+        <GithubIcon onClick={() => window.open(urlGithub,'_blank')}/> */}
         </div>
       </div>
       <div className='skills'>

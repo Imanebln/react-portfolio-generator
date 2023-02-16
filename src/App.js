@@ -7,6 +7,7 @@ import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import ProjectDisplay from './pages/ProjectDisplay';
 import CreateCV from './pages/CreateCV';
+import Profile from './pages/Profile';
 import { Provider } from 'react-redux';
 import {store} from './redux/store.js'
 
@@ -22,6 +23,7 @@ function App() {
           <Route path='/Experience' element={<Experience/>} />
           <Route path='/Projects' element={<Projects/>} />
           <Route path='/create' element={<CreateCV/>} />
+          <Route path='/profile' element={<Profile/>} />
           <Route path='/project/:id' element={<ProjectDisplay />} />
         </Routes>
         

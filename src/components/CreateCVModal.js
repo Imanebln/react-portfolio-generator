@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { makeStyles } from "tss-react/mui";
 import CloseIcon from '@mui/icons-material/Close';
 import { useDispatch } from 'react-redux';
-import { addExperience } from '../redux/store';
+import { addExperience, addEducation } from '../redux/store';
 
  // 👇 update mui styles
 const useStyles = makeStyles()((theme) => ({
@@ -13,6 +13,10 @@ const useStyles = makeStyles()((theme) => ({
         justifyContent: 'center',
       },
       paper: {
+        display: 'column',
+        alignItems: 'center',
+        flexDirection: 'center',
+        width: '370px',
         backgroundColor: theme.palette.background.paper,
         border: '2px solid #000',
         boxShadow: theme.shadows[5],
@@ -24,8 +28,7 @@ const useStyles = makeStyles()((theme) => ({
         width: "300px"
        },
        closeBtn: {
-        marginLeft: '270px',
-        color: theme.palette.grey[500],
+
        },
        addBtn: {
         marginLeft: '115px'
@@ -34,7 +37,7 @@ const useStyles = makeStyles()((theme) => ({
     }
    ));
 
-function CreateCVModal({open, handleClose}) {
+function CreateCVModal({open, handleClose, type}) {
    
    // 👇 update mui styles
   const {classes} = useStyles();
@@ -43,7 +46,21 @@ function CreateCVModal({open, handleClose}) {
    const dispatch = useDispatch();
 
    // 👇 experience state
-   const [experience, setExperience] = useState({ title: '', start: '', end: '' });
+   const [experience, setExperience] = useState({ title: '', company: '', start: '', end: '' });
+
+   // 👇 education state
+   const [education, setEducation] = useState({title: '', univ: '', start: '', end: ''})
+
+   // 👇 handle education
+   const handleChangeEducation = e => {
+    setEducation({...education, [e.target.name]: e.target.value});
+   }
+
+   // 👇 Dispatch education
+   const handleAddEducation = () => {
+    dispatch(addEducation(education));
+    handleClose();
+   }
 
    // 👇 handle experience
    const handleChange = e => {
@@ -55,6 +72,7 @@ function CreateCVModal({open, handleClose}) {
     dispatch(addExperience(experience));
     handleClose();
   }
+  console.log(type);
 
   return (
         <Modal
@@ -65,23 +83,38 @@ function CreateCVModal({open, handleClose}) {
          className={classes.modal}
         >
         <Fade in={open}>
-          <div className={classes.paper} >
+          <form className={classes.paper} onSubmit={type === 'experience' ? handleAddExperience : handleAddEducation}>
           <CloseIcon onClick={handleClose} className={classes.closeBtn} />
-            <h2 id="transition-modal-title">Add</h2>
+              <h2 id="transition-modal-title" 
+                style={{color: '#3B3F46', textAlign: 'center'}}
+              >Add {type === 'experience' ? 'Experience' : 'Education'}</h2>
             <TextField
             className={classes.field}
               label="Title"
               name="title"
-              value={experience.title}
-              onChange={handleChange}
+              value={type === 'experience' ? experience.title : education.title}
+              onChange={type === 'experience' ? handleChange : handleChangeEducation}
+              required
             /><br/><br/>
+            {type === 'experience' ? 
             <TextField
             className={classes.field}
               label="Company"
               name="company"
-              value={experience.company || ""}
+              value={experience.company}
               onChange={handleChange}
+              required
             />
+            :
+            <TextField
+            className={classes.field}
+              label="School Or University"
+              name="univ"
+              value={education.univ}
+              onChange={handleChangeEducation}
+              required
+            />
+            }
             <p
             style={{marginBottom: '4px'}}
             >Start Day</p>
@@ -89,8 +122,9 @@ function CreateCVModal({open, handleClose}) {
               className={classes.field}
               type="date"
               name="start"
-              value={experience.start}
-              onChange={handleChange}
+              value={type === 'experience' ? experience.start : education.start}
+              onChange={type === 'experience' ? handleChange : handleChangeEducation} 
+              required
             />
             <p
              style={{marginBottom: '4px'}}
@@ -98,15 +132,15 @@ function CreateCVModal({open, handleClose}) {
             <TextField
               className={classes.field}
               type="date"
-              placeholder='none'
+              value={type === 'experience' ? experience.end : education.end}
               name="end"
-              value={experience.end}
-              onChange={handleChange}
+              onChange={type === 'experience' ? handleChange : handleChangeEducation} 
+              required
             /><br/><br/>
-            <Button className={classes.addBtn} onClick={handleAddExperience} variant="contained" color="primary">
+            <Button type='submit' fullWidth className={classes.closeBtn} color="primary">
               Add
             </Button>
-          </div>
+          </form>
         </Fade>
         </Modal>
   )

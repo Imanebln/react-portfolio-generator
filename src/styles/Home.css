@@ -20,18 +20,44 @@
   .about h2 {
     font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
     font-size: 80px;
-    color: #e9d35b;
-    height: 50px;
+    color: #FED053;
+    height: 80px;
   }
   
   .about .prompt {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
     width: 40%;
     font-size: 30px;
   }
+
+  .prompt .contactMe {
+    border: 1px solid #FED053;
+    text-transform: uppercase;
+    text-decoration: none;
+    border-radius: 2px;
+    color: rgb(213, 206, 206);
+    margin: 5px;
+    padding: 10px 7px;
+    font-size: 20px;
+  }
+
+  .contactMe:hover{
+    transform: translateY(-2px);
+  }
+
+
   .prompt svg {
-    font-size: 60px;
+    font-size: 50px;
     margin: 5px;
     color: white;
+  }
+
+  .typedText {
+    margin: 30px;
   }
   
   .skills {
@@ -41,6 +67,7 @@
     justify-content: center;
     flex-direction: column;
     align-items: center;
+    color: #3B3F46;
   }
   
   .skills h1 {
@@ -54,6 +81,21 @@
   
   .list span {
     font-size: 20px;
+  }
+
+  @media only screen and (max-width: 1255px){
+    .about h2 {
+      font-size: 60px;
+    }
+    .about .prompt {
+      margin-top: 40px;
+      font-size: 30px;
+      width: 80%;
+    }
+    .prompt .contactMe {
+      margin-top: 20px;
+      font-size: 20px;
+    }
   }
   
   @media only screen and (max-width: 600px) {
@@ -79,5 +121,5 @@
     }
   }
   * {
-    font-family: Quicksand;
+    font-family: Roboto;
   }

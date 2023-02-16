@@ -5,13 +5,15 @@ export const userSlice = createSlice({
     name: 'user',
     initialState: {
         user: {
+            image: "",
             fullname: "",
             email: "",
             phone: "",
             age: null,
             profile: "",
             skills: [],
-            experiences: []
+            experiences: [],
+            education: []
         }
     },
     reducers: {
@@ -35,6 +37,10 @@ export const userSlice = createSlice({
             state.user.profile = action.payload;
         },
 
+        addImage: (state, action) => {
+            state.user.image = action.payload;
+        },
+
         addSkill: (state, action) =>{
             state.user.skills = [...state.user.skills, action.payload]
         },
@@ -43,13 +49,21 @@ export const userSlice = createSlice({
             state.user.experiences = [...state.user.experiences, action.payload]
         },
 
+        addEducation: (state, action) => {
+            state.user.education = [...state.user.education, action.payload]
+        },
+
         removeSkill: (state, action) => {
             state.user.skills = state.user.skills.filter((skill) => skill !== action.payload)
         },
 
         removeExperience: (state, action) => {
             state.user.experiences = state.user.experiences.filter((experience) => experience !== action.payload)
+        },
+        removeEducation: (state, action) => {
+            state.user.education = state.user.education.filter((edu) => edu !== action.payload)
         }
+
 
     }
 });
@@ -58,6 +72,9 @@ export const userSlice = createSlice({
 export const {
     addSkill,
     addExperience,
+    addEducation,
+    addImage,
+    removeEducation,
     removeExperience, 
     removeSkill,
     changeAge,

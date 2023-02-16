@@ -28,6 +28,7 @@ function Navbar() {
                 <Link to='/projects'> Projects </Link>
                 <Link to='/experience'> Experience </Link>
                 <Link to='/create'> Create CV </Link>
+                <Link to='/profile'> Profile </Link>
             </div>
         </div>
     </div>

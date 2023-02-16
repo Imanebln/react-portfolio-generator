@@ -17,7 +17,13 @@
     color: white;
     text-decoration: none;
     margin: 25px;
-    font-size: 20px;
+    font-size: 17px;
+  }
+  .navbar a:focus {
+    border-top: solid #FED053;
+  }
+  .navbar a:hover {
+    border-top: solid #FED053;
   }
   
   .toggleButton {
@@ -57,6 +63,7 @@
   @media only screen and (max-width: 900px) {
     .navbar a {
       width: 70px;
+      text-align: center;
     }
   }
   

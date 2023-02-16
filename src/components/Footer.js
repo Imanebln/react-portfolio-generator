@@ -23,7 +23,7 @@ function Footer() {
             <TwitterIcon onClick={() => window.open(urlTwitter,'_blank')}/>
         </div>
         <p>
-            &copy; 2023 portfolio.com
+            &copy; {new Date().getFullYear()} portfolio.com
         </p>
 
     </div>
