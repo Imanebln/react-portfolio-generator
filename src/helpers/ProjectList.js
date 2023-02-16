@@ -3,7 +3,7 @@ import PFEProgress from '../assets/pfeProgress.png';
 import PassManager from '../assets/passManager.png';
 import CleanIt from '../assets/cleanIt.png';
 import SQLICostumerPortal from '../assets/SQLICostumerPortal.png';
-
+import IgniteSocial from '../assets/ignite-social.png'
 export const ProjectList = [
     {
         name: 'Password Manager',
@@ -30,5 +30,10 @@ export const ProjectList = [
         name: 'Clean It',
         image: CleanIt,
         skills: 'Java, Android Studio, SQLite, Git'
+    },
+    {
+        name: 'Ignite-Social',
+        image: IgniteSocial,
+        skills: 'ReactJS, Express, JS, MUI, Git'
     }
 ]
