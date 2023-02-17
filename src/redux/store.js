@@ -1,90 +1,94 @@
 import { configureStore, createSlice } from "@reduxjs/toolkit";
 
- // 👇 create actions using createSlice
+// 👇 create actions using createSlice
 export const userSlice = createSlice({
-    name: 'user',
-    initialState: {
-        user: {
-            image: "",
-            fullname: "",
-            email: "",
-            phone: "",
-            age: null,
-            profile: "",
-            skills: [],
-            experiences: [],
-            education: []
-        }
+  name: "user",
+  initialState: {
+    user: {
+      image: "",
+      fullname: "",
+      email: "",
+      phone: "",
+      age: null,
+      profile: "",
+      skills: [],
+      experiences: [],
+      education: [],
     },
-    reducers: {
-        changeFullname: (state, action) => {
-            state.user.fullname = action.payload;
-        },
+  },
+  reducers: {
+    changeFullname: (state, action) => {
+      state.user.fullname = action.payload;
+    },
 
-        changeEmail: (state, action) => {
-            state.user.email = action.payload;
-        },
-        
-        changePhone: (state, action) => {
-            state.user.phone = action.payload;
-        },
+    changeEmail: (state, action) => {
+      state.user.email = action.payload;
+    },
 
-        changeAge: (state, action) => {
-            state.user.age = action.payload;
-        },
+    changePhone: (state, action) => {
+      state.user.phone = action.payload;
+    },
 
-        changeProfile: (state, action) => {
-            state.user.profile = action.payload;
-        },
+    changeAge: (state, action) => {
+      state.user.age = action.payload;
+    },
 
-        addImage: (state, action) => {
-            state.user.image = action.payload;
-        },
+    changeProfile: (state, action) => {
+      state.user.profile = action.payload;
+    },
 
-        addSkill: (state, action) =>{
-            state.user.skills = [...state.user.skills, action.payload]
-        },
+    addImage: (state, action) => {
+      state.user.image = action.payload;
+    },
 
-        addExperience: (state, action) => {
-            state.user.experiences = [...state.user.experiences, action.payload]
-        },
+    addSkill: (state, action) => {
+      state.user.skills = [...state.user.skills, action.payload];
+    },
 
-        addEducation: (state, action) => {
-            state.user.education = [...state.user.education, action.payload]
-        },
+    addExperience: (state, action) => {
+      state.user.experiences = [...state.user.experiences, action.payload];
+    },
 
-        removeSkill: (state, action) => {
-            state.user.skills = state.user.skills.filter((skill) => skill !== action.payload)
-        },
+    addEducation: (state, action) => {
+      state.user.education = [...state.user.education, action.payload];
+    },
 
-        removeExperience: (state, action) => {
-            state.user.experiences = state.user.experiences.filter((experience) => experience !== action.payload)
-        },
-        removeEducation: (state, action) => {
-            state.user.education = state.user.education.filter((edu) => edu !== action.payload)
-        }
+    removeSkill: (state, action) => {
+      state.user.skills = state.user.skills.filter(
+        (skill) => skill !== action.payload
+      );
+    },
 
-
-    }
+    removeExperience: (state, action) => {
+      state.user.experiences = state.user.experiences.filter(
+        (experience) => experience.title !== action.payload
+      );
+    },
+    removeEducation: (state, action) => {
+      state.user.education = state.user.education.filter(
+        (edu) => edu.title !== action.payload
+      );
+    },
+  },
 });
 
- // 👇 export reducer actions
+// 👇 export reducer actions
 export const {
-    addSkill,
-    addExperience,
-    addEducation,
-    addImage,
-    removeEducation,
-    removeExperience, 
-    removeSkill,
-    changeAge,
-    changeEmail,
-    changeFullname,
-    changePhone,
-    changeProfile,
+  addSkill,
+  addExperience,
+  addEducation,
+  addImage,
+  removeEducation,
+  removeExperience,
+  removeSkill,
+  changeAge,
+  changeEmail,
+  changeFullname,
+  changePhone,
+  changeProfile,
 } = userSlice.actions;
 
- // 👇 configure store
+// 👇 configure store
 export const store = configureStore({
-    reducer: userSlice.reducer
-})
+  reducer: userSlice.reducer,
+});
