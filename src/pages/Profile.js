@@ -99,7 +99,11 @@ function Profile() {
   };
 
   return (
-    <div>
+    <div
+      style={{
+        background: `linear-gradient(to bottom, #fdfbe9 0%, white 100%)`,
+      }}
+    >
       <ThemeProvider theme={theme}>
         <Container component="main" maxWidth="sm">
           <CssBaseline />

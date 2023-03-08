@@ -1,28 +1,28 @@
 .project {
-    width: 100%;
-    height: calc(100vh - 100px);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-  }
-  
-  .project h1 {
-    margin-top: 50px;
-    color: #000000;
-    font-size: 35px;
-  }
-  .project img {
-    width: 700px;
-    border-radius: 10px;
-  }
-  
-  .project p {
-    font-size: 40px;
-    color: #000000;
-  }
-  
-  .project svg {
-    font-size: 60px;
-    color: #000000;
-  }
+  width: 100%;
+  height: calc(100vh - 100px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.project h1 {
+  margin-top: 50px;
+  color: #000000;
+  font-size: 35px;
+}
+.project img {
+  width: 700px;
+  border-radius: 10px;
+}
+
+.project p {
+  font-size: 30px;
+  color: #000000;
+}
+
+.project svg {
+  font-size: 60px;
+  color: #000000;
+}
